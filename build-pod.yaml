@@ -22,7 +22,7 @@ spec:
         "/bin/bash",
         "-cpe",
         "ls -la $JAVA_HOME/ &&
-
+        ls -la $JAVA_HOME/lib/security &&
         /usr/local/bin/mvn-entrypoint.sh && mvn"]
     - name: docker
       image: docker:18.06.1
