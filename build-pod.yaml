@@ -4,14 +4,14 @@ spec:
   containers:  # list of containers that you want present for your build, you can define a default container in the Jenkinsfile
     - name: maven
       image: maven:3.8.6-openjdk-11
-      command: [
-        "/bin/bash",
-        "-cp",
+      #command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
+      command: ["/bin/sh"]
+      args: ["-cp",
         "cp $JAVA_HOME/lib/security/cacerts /mnt/keystore.jks && 
         openssl s_client -showcerts -connect dti-jenkins.unilab.edu.br:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /mnt/unilab-edu-br-chain.pem.crt && 
         keytool -import -trustcacerts -alias cacert-unlb -file /mnt/unilab-edu-br-chain.pem.crt -keystore /mnt/keystore.jks -noprompt -storepass changeit && 
         cp /mnt/keystore.jks $JAVA_HOME/lib/security/cacerts",
-        "tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
+        "tail", "-f", "/dev/null"]
       imagePullPolicy: Always # use cache or pull image for agent
       resources:  # limits the resources your build contaienr
         requests:
@@ -26,6 +26,7 @@ spec:
             -Xmx2G
             -XshowSettings:vm 
             -Duser.timezone=America/Fortaleza
+    restartPolicy: OnFailure
     - name: docker
       image: docker:23.0.1
       command: ["tail", "-f", "/dev/null"]
