@@ -12,9 +12,9 @@ spec:
           cpu: "500m"
         limits:
           memory: "3Gi"
-      env:
-      - name: JENKINS_URL
-        value: "http://jenkins.jenkins.svc.cluster.local:8080"
+      #env:
+      #- name: JENKINS_URL
+      #  value: "http://jenkins.jenkins.svc.cluster.local:8080"
       #- name: JAVA_OPTS
       #  value: >-
       #    -Xms1G
