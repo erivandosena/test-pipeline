@@ -1,9 +1,18 @@
 #!/usr/bin/env groovy
 
 pipeline {
+  
+  environment {
+    PROJECT = "jenkins-cd-k8s"
+    APP_NAME = "sample-app"
+    IMAGE_TAG = "erivando/${APP_NAME}:${env.BUILD_NUMBER}"
+    JENKINS_URL = "http://jenkins.jenkins.svc.cluster.local:8080"
+    JAVA_OPTS = "-Xms1G -Xmx2G -XshowSettings:vm -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true -Duser.timezone=America/Fortaleza" 
+  }
+  
   agent {
     kubernetes {
-      inheritFrom 'sample-app'  // all your pods will be named with this prefix, followed by a unique id
+      inheritFrom '${APP_NAME}'  // all your pods will be named with this prefix, followed by a unique id
       idleMinutes 5  // how long the pod will live after no jobs have run on it
       yamlFile 'build-pod.yaml'  // path to the pod definition relative to the root of our project 
       defaultContainer 'maven'  // define a default container if more than a few stages use it, will default to jnlp container
