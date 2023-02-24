@@ -34,8 +34,17 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${dockerHubUser} -p ${dockerHubPassword}"
           sh "docker push erivando/sample-app:${build_tag}"        // which is just connecting to the host docker deaemon
-        }
       }
     }
-  }
+    stage('Deploy') {
+      steps {
+        echo "5. Deploy to K8S Cluster"
+        #sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
+        #sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
+        sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'  
+        sh 'chmod u+x ./kubectl'  
+        sh './kubectl apply -f k8s.yaml'      
+        sh "kubectl apply -f k8s.yaml --record"
+      }
+   }
 }
