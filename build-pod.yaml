@@ -11,7 +11,7 @@ spec:
         "-cpe",
         "keytool -list -keystore $JAVA_HOME/lib/security/cacerts &&
         ls -la &&
-        find / -name cacerts -type f"]
+        find / -name certificate_file_downloaded.cer -type f"]
       resources:  # limits the resources your build contaienr
         requests:
           memory: "1Gi"
