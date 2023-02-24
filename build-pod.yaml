@@ -13,11 +13,12 @@ spec:
         limits:
           memory: "3Gi"
       env:
+      - name: JENKINS_URL
+        value: "http://jenkins.jenkins.svc.cluster.local:8080"
       - name: JAVA_OPTS
         value: >-
           -Xms1G
           -Xmx2G
-          -XshowSettings:vm 
           -XshowSettings:vm
           -Duser.timezone=America/Fortaleza
     - name: docker
