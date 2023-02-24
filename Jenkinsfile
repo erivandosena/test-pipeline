@@ -34,6 +34,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${dockerHubUser} -p ${dockerHubPassword}"
           sh "docker push erivando/sample-app:${build_tag}"        // which is just connecting to the host docker deaemon
+        }
       }
     }
     stage('Deploy') {
@@ -48,5 +49,6 @@ pipeline {
         sh './kubectl apply -f k8s.yaml'      
         sh "kubectl apply -f k8s.yaml --record"
       }
-   }
+    }
+  }
 }
