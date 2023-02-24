@@ -26,7 +26,6 @@ spec:
             -Xmx2G
             -XshowSettings:vm 
             -Duser.timezone=America/Fortaleza
-    restartPolicy: OnFailure
     - name: docker
       image: docker:23.0.1
       command: ["tail", "-f", "/dev/null"]
