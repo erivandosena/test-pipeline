@@ -19,14 +19,4 @@ spec:
             -Xmx2G
             -XshowSettings:vm 
             -Duser.timezone=America/Fortaleza
-    - name: docker
-      image: docker:23.0.1
-      command: ["tail", "-f", "/dev/null"]
-      imagePullPolicy: Always
-      volumeMounts:
-        - name: docker
-          mountPath: /var/run/docker.sock # We use the k8s host docker engine
-  volumes:
-    - name: docker
-      hostPath:
-        path: /var/run/docker.sock
+
