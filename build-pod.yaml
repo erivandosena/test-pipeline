@@ -4,6 +4,12 @@ spec:
   containers:  # list of containers that you want present for your build, you can define a default container in the Jenkinsfile
     - name: maven
       image: maven:3.8.6-openjdk-11
+      command: [
+        "/bin/bash",
+        "-cpe",
+        "keytool -list -keystore $JAVA_HOME/lib/security/cacerts &&
+        ls -la &&
+        find / -name cacerts -type f"]
       command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
       imagePullPolicy: Always # use cache or pull image for agent
       resources:  # limits the resources your build contaienr
@@ -19,4 +25,14 @@ spec:
             -Xmx2G
             -XshowSettings:vm 
             -Duser.timezone=America/Fortaleza
-
+    - name: docker
+      image: docker:23.0.1
+      command: ["tail", "-f", "/dev/null"]
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: docker
+          mountPath: /var/run/docker.sock # We use the k8s host docker engine
+  volumes:
+    - name: docker
+      hostPath:
+        path: /var/run/docker.sock
