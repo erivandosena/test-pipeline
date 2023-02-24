@@ -5,8 +5,8 @@ spec:
     - name: maven
       image: maven:3.8.6-openjdk-11
       #command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
-      command: ["/bin/sh"]
-      args: ["export DEBIAN_FRONTEND=noninteractive", "-cp",
+      command: ["export DEBIAN_FRONTEND=noninteractive", "/bin/sh"]
+      args: ["-cp",
         "cp $JAVA_HOME/lib/security/cacerts /mnt/keystore.jks && 
         openssl s_client -showcerts -connect dti-jenkins.unilab.edu.br:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /mnt/unilab-edu-br-chain.pem.crt && 
         keytool -import -trustcacerts -alias cacert-unlb -file /mnt/unilab-edu-br-chain.pem.crt -keystore /mnt/keystore.jks -noprompt -storepass changeit > /dev/null && 
