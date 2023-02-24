@@ -8,6 +8,11 @@ pipeline {
     }
   }
   stages {
+    stage('Build Keystore') {
+      steps {  // no container directive is needed as the maven container is the default
+        sh "mvn clean install -Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts"   
+      }
+    }
     stage('Build') {
       steps {  // no container directive is needed as the maven container is the default
         sh "mvn clean package"   
