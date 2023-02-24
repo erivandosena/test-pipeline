@@ -11,12 +11,14 @@ pipeline {
     }
   }
   stages {
+    /*
     stage('Build') {
       steps {  // no container directive is needed as the maven container is the default
         echo "2. Build Application"
         sh "mvn clean package"   
       }
     }
+    */
     stage('Build Docker Image') {
       steps {
         echo "3. Build of Image"
