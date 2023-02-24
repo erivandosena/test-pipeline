@@ -13,7 +13,8 @@ pipeline {
     stage('Build Keystore') {
       steps {
         echo "1. Add cert in Java"
-        sh "mvn clean install -Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts"   
+        //sh "mvn clean install -Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts"
+        sh "mvn clean package -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
       }
     }
     stage('Build') {
