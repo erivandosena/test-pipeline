@@ -24,7 +24,6 @@ spec:
               -Dmaven.wagon.http.ssl.insecure=true
               -Dmaven.wagon.http.ssl.allowall=true
               -Dmaven.wagon.http.ssl.ignore.validity.dates=true
-              -Duser.timezone=America/Fortaleza
     - name: docker
       image: docker:23.0.1
       command: ["tail", "-f", "/dev/null"]
