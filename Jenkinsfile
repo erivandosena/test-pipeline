@@ -7,7 +7,8 @@ pipeline {
     APP_NAME = "sample-app"
     IMAGE_TAG = "erivando/${APP_NAME}:${env.BUILD_NUMBER}"
     //JENKINS_URL = "http://jenkins.jenkins.svc.cluster.local:8080"
-    JAVA_OPTS = "-Xms1G -Xmx2G -XshowSettings:vm -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true -Duser.timezone=America/Fortaleza" 
+    JAVA_OPTS = "-Xms1G -Xmx2G -XshowSettings:vm -Duser.timezone=America/Fortaleza"
+    MAVEN_OPTS = "-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true"
   }
   
   agent {
