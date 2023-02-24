@@ -4,14 +4,7 @@ spec:
   containers:  # list of containers that you want present for your build, you can define a default container in the Jenkinsfile
     - name: maven
       image: maven:3.8.6-openjdk-11
-      #command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
-      command: ["/bin/bash"]
-      args: ["-cp",
-        "cp $JAVA_HOME/lib/security/cacerts /mnt/keystore.jks;
-        openssl s_client -showcerts -connect dti-jenkins.unilab.edu.br:443 </dev/null 2>/dev/null|openssl x509 -outform PEM > /mnt/unilab-edu-br-chain.pem.crt;
-        keytool -import -trustcacerts -alias cacert-unlb -file /mnt/unilab-edu-br-chain.pem.crt -keystore /mnt/keystore.jks -noprompt -storepass changeit >/dev/null;
-        cp /mnt/keystore.jks $JAVA_HOME/lib/security/cacerts;
-        mvn"]
+      command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
       imagePullPolicy: Always # use cache or pull image for agent
       resources:  # limits the resources your build contaienr
         requests:
@@ -19,6 +12,16 @@ spec:
           cpu: "500m"
         limits:
           memory: "2Gi"
+      env:
+      - name: JAVA_OPTS
+        # To allocate controllers using a non-default storage class, add the following
+        # -Dcom.cloudbees.masterprovisioning.kubernetes.KubernetesMasterProvisioning.storageClassName=some-storage-class
+        value: >-
+          -XshowSettings:vm
+          -Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts
+          -Djavax.net.ssl.trustStorePassword=changeit
+          -Dmaven.wagon.http.ssl.insecure=true 
+          -Dmaven.wagon.http.ssl.allowall=true
     - name: docker
       image: docker:23.0.1
       command: ["tail", "-f", "/dev/null"]
