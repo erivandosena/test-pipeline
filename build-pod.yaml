@@ -12,18 +12,18 @@ spec:
           cpu: "500m"
         limits:
           memory: "3Gi"
-      env:
-      - name: JAVA_OPTS
-        value: >-
-              -Xms1G
-              -Xmx2G
-              -XshowSettings:vm
-              -Duser.timezone=America/Fortaleza
-      - name: MAVEN_OPTS
-        value: >-
-              -Dmaven.wagon.http.ssl.insecure=true
-              -Dmaven.wagon.http.ssl.allowall=true
-              -Dmaven.wagon.http.ssl.ignore.validity.dates=true
+      # env:
+      # - name: JAVA_OPTS
+      #   value: >-
+      #         -Xms1G
+      #         -Xmx2G
+      #         -XshowSettings:vm
+      #         -Duser.timezone=America/Fortaleza
+      # - name: MAVEN_OPTS
+      #   value: >-
+      #         -Dmaven.wagon.http.ssl.insecure=true
+      #         -Dmaven.wagon.http.ssl.allowall=true
+      #         -Dmaven.wagon.http.ssl.ignore.validity.dates=true
     - name: docker
       image: docker:23.0.1
       command: ["tail", "-f", "/dev/null"]
