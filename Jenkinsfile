@@ -34,7 +34,7 @@ pipeline {
     stage('Checkout Source') {
       steps {
         
-        git url: 'https://github.com/erivandosena/test-pipeline.git', branch: '*/master'
+        //git url: 'https://github.com/erivandosena/test-pipeline.git', branch: '*/master'
 
         if (params.commit_sha?.trim()) {
           print "Checking out commit ${commit_sha}"
