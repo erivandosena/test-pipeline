@@ -4,29 +4,31 @@ spec:
   containers:  # list of containers that you want present for your build, you can define a default container in the Jenkinsfile
     - name: maven
       image: erivando/maven:3.9.0-openjdk-11 #maven:3.8.6-openjdk-11
-      command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
+      #command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
       imagePullPolicy: Always # use cache or pull image for agent
       resources:  # limits the resources your build contaienr
         requests:
-          memory: "1Gi"
-          cpu: "500m"
+          cpu: "250m"
+          memory: "512Mi"
         limits:
+          cpu: "5000m"
           memory: "3Gi"
-      # env:
-      # - name: JAVA_OPTS
-      #   value: >-
-      #         -Xms1G
-      #         -Xmx2G
-      #         -XshowSettings:vm
-      #         -Duser.timezone=America/Fortaleza
-      # - name: MAVEN_OPTS
-      #   value: >-
-      #         -Dmaven.wagon.http.ssl.insecure=true
-      #         -Dmaven.wagon.http.ssl.allowall=true
-      #         -Dmaven.wagon.http.ssl.ignore.validity.dates=true
+      env:
+      - name: JAVA_OPTS
+        value: >-
+              -Xms1G
+              -Xmx2G
+              -XshowSettings:vm
+              -Duser.timezone=America/Fortaleza
+      - name: MAVEN_OPTS
+        value: >-
+              -Dmaven.wagon.http.ssl.insecure=true
+              -Dmaven.wagon.http.ssl.allowall=true
+              -Dmaven.wagon.http.ssl.ignore.validity.dates=true
     - name: docker
       image: docker:23.0.1
-      command: ["tail", "-f", "/dev/null"]
+      #command: ["tail", "-f", "/dev/null"]
+      command: ["docker", "ps -a", "/dev/null"]
       imagePullPolicy: Always
       volumeMounts:
         - name: docker
