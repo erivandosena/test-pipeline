@@ -28,7 +28,6 @@ spec:
     - name: docker
       image: docker:23.0.1
       #command: ["tail", "-f", "/dev/null"]
-      command: ["docker ps -a", "/dev/null"]
       imagePullPolicy: Always
       volumeMounts:
         - name: docker
