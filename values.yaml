@@ -4,13 +4,15 @@ data:
 kind: Secret
 metadata:
   name: harbor-registro 
-  namespace: docker
+  namespace: jenkins
 type: kubernetes.io/dockerconfigjson
 
 ---
 apiVersion: v1
 kind: Pod
 metadata:
+  name: slave
+  namespace: jenkins
   labels:
     jenkins: slave
 spec:
