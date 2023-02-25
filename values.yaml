@@ -6,12 +6,12 @@ metadata:
   labels:
     jenkins: slave
 spec:
-  containers:  # list of containers that you want present for your build, you can define a default container in the Jenkinsfile
+  containers:  # lista de contêineres que você deseja apresentar para sua compilação, pode definir um contêiner padrão no Jenkinsfile
     - name: maven
-      image: erivando/maven:3.9.0-openjdk-11 #maven:3.8.6-openjdk-11
-      command: ["tail", "-f", "/dev/null"]  # this or any command that is bascially a noop is required, this is so that you don't overwrite the entrypoint of the base container
-      imagePullPolicy: Always # use cache or pull image for agent
-      resources:  # limits the resources your build contaienr
+      image: erivando/maven:3.9.0-openjdk-11 # imagem customizada
+      command: ["tail", "-f", "/dev/null"]  # este ou qualquer comando que seja basicamente um noop é necessário, isso é para que não substitua o ponto de entrada do contêiner base
+      imagePullPolicy: Always # use o cache ou puxe a imagem para o agente
+      resources:  # limites e recursos que o build contém
         requests:
           cpu: "250m"
           memory: "512Mi"
@@ -25,7 +25,7 @@ spec:
       resources: {}
       volumeMounts:
         - name: docker
-          mountPath: /var/run/docker.sock # We use the k8s host docker engine
+          mountPath: /var/run/docker.sock # Usao do mecanismo do docker do host k8s
   volumes:
     - name: docker
       hostPath:
