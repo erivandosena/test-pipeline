@@ -33,6 +33,10 @@ pipeline {
   stages {
     stage('CI/CD Preparing/Initialize') {
       steps {
+        git(
+          url: 'https://github.com/erivandosena/test-pipeline.git',
+          branch: "*/master"
+        )
         git url: 'https://github.com/erivandosena/test-pipeline.git'
         script{
           valuesYaml = loadValuesYaml()
