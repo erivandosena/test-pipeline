@@ -27,7 +27,7 @@ pipeline {
     stage('Build') {
       steps {  // no container directive is needed as the maven container is the default
         echo "2. Build Application"
-        sh "mvn clean package"   
+        sh "mvn clean package -Dmy.variable=${APP_NAME}"   
       }
     }
     stage('Build Docker Image') {
