@@ -34,16 +34,15 @@ pipeline {
     stage('CI/CD Preparing/Initialize') {
       steps {
         git url: 'https://github.com/erivandosena/test-pipeline.git'
-          script{
-            valuesYaml = loadValuesYaml()
-            print valuesYaml.getClass()
-            valuesYaml.each{
-                 println it
-            }
+        script{
+          valuesYaml = loadValuesYaml()
+          print valuesYaml.getClass()
+          valuesYaml.each{
+            println it
           }
         }
       }
-    }           
+    }          
     stage('Build') {
       steps {  // no container directive is needed as the maven container is the default
         echo "2. Build Application"
