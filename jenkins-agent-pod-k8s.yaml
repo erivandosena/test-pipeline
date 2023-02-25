@@ -33,8 +33,8 @@ metadata:
     app: jenkins-agent-inbound
   annotations:
     cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
-    datree.skip/CONTAINERS_MISSING_READINESSPROBE_KEY: readiness probe is not relevant for CI/CD CLI shell containers
-    datree.skip/CONTAINERS_MISSING_LIVENESSPROBE_KEY: liveness probe is not relevant for CI/CD CLI shell containers
+    datree.skip/CONTAINERS_MISSING_READINESSPROBE_KEY: readiness probe não é relevante para contêineres de shell CI/CD CLI
+    datree.skip/CONTAINERS_MISSING_LIVENESSPROBE_KEY: liveness probe não é relevante para contêineres de shell CI/CD CLI
 spec:
   priorityClassName: high-priority  # requer priorityclass.yaml
   affinity:
