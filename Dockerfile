@@ -1,5 +1,5 @@
-FROM java:8
+FROM openjdk-8u111-jre
 WORKDIR /opt
-ADD target/my-app-1.0-SNAPSHOT.jar /opt
+ADD target/br.edu.unilab.${APP_NAME}-1.0-SNAPSHOT.jar /opt
 
-CMD ["java", "-jar", "opt/my-app-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "opt/${APP_NAME}-1.0-SNAPSHOT.jar"]
