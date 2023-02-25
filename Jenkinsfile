@@ -31,7 +31,7 @@ pipeline {
     }
   }
   
-  properties([parameters([choice(choices: ['master', 'feature_1'], description: 'Select desired branch to build', name: 'branches')])])
+  properties([parameters([choice(choices: ['*/master'], description: 'Select desired branch to build', name: 'branches')])])
   
   stages {
     stage('CI/CD Preparing/Initialize') {
