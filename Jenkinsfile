@@ -15,7 +15,8 @@ pipeline {
     PROJECT = "jenkins-cd-k8s"
     */
     APP_NAME = "sample-app"
-    DOCKER_TAG = getDockerTag()
+    //DOCKER_TAG = getDockerTag()
+    DOCKER_TAG = "latest"
     BUILD_NUMBER = "${env.BUILD_NUMBER}"
     IMAGE_TAG = "erivando/${APP_NAME}:${DOCKER_TAG}"
   }
