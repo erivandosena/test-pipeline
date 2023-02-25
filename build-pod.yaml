@@ -14,7 +14,7 @@ spec:
           cpu: "5000m"
           memory: "3Gi"
     - name: docker
-      image: dti-registro.unilab.edu.br/unilab/docker:latest
+      image: docker:20.10 #dti-registro.unilab.edu.br/unilab/docker:latest
       #command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
       resources: {}
