@@ -5,25 +5,27 @@ def loadValuesYaml(){
   return valuesYaml;
 }
 
+def getDockerTag(){
+  def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+  return tag
+}
+
 pipeline {
   environment {
-    /*
     JENKINS_URL = "http://jenkins.jenkins.svc.cluster.local"
-    JENKINS_TUNNEL = "jenkins.jenkins.svc.cluster.local:50000"
-    JENKINS_AGENT_NAME = "jnlp-slave"
+    JENKINS_TUNNEL = "jenkins.jenkins.svc.cluster.local:"
     JENKINS_AGENT_WORKDIR = "/home/jenkins/agent"
+    JENKINS_AGENT_NAME = "jnlp-pod-slave"
     PROJECT = "jenkins-cd-k8s"
-    */
     APP_NAME = "sample-app"
-    //DOCKER_TAG = getDockerTag()
-    DOCKER_TAG = "latest"
-    BUILD_NUMBER = "${env.BUILD_NUMBER}"
+    DOCKER_TAG = getDockerTag()
     IMAGE_TAG = "erivando/${APP_NAME}:${DOCKER_TAG}"
+    BUILD_NUMBER = "${env.BUILD_NUMBER}"
   }
   agent {
     kubernetes {
       //label 'mypod'
-      inheritFrom 'jnlp-pod'  // all your pods will be named with this prefix, followed by a unique id
+      inheritFrom 'jnlp'  // all your pods will be named with this prefix, followed by a unique id
       idleMinutes 5  // how long the pod will live after no jobs have run on it
       defaultContainer 'maven'
     }
@@ -67,16 +69,17 @@ pipeline {
     stage('Deploy') {
       steps {
         echo "5. Deploy to K8S Cluster"
-        //container('maven') {
+        container('maven') {
           /*
           sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
           sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
           */
           sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'  
           sh 'chmod u+x ./kubectl'  
-          sh './kubectl apply -f k8s.yaml'      
-          sh "kubectl apply -f k8s.yaml --record"
-        //}
+          //sh './kubectl apply -f k8s.yaml'      
+          //sh "kubectl apply -f k8s.yaml --record"
+          kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'K8s-c2-config'
+        }
       }
     }
   }
