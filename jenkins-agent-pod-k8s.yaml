@@ -21,19 +21,6 @@
 # veja o modelo Jenkinsfile referenciando este modelo de pod:
 #
 #   https://github.com/erivandosena/Templates/blob/master/Jenkinsfile
-
-# https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/
-# O Pod priority é um recurso de agendamento do Kubernetes que permite ao Kubernetes 
-# tomar decisões de agendamento comparando outros pods com base no número de prioridade.
-apiVersion: scheduling.k8s.io/v1
-kind: PriorityClass
-metadata:
-  name: high-priority-apps
-value: 1000000
-preemptionPolicy: PreemptLowerPriority
-globalDefault: false
-description: "Aplicativos de missão crítica."
-
 ---
 apiVersion: v1
 kind: Pod
