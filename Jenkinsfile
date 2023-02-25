@@ -23,7 +23,6 @@ pipeline {
   agent {
     kubernetes {
       //label 'mypod'
-      valuesYaml = loadValuesYaml()
       inheritFrom 'jnlp-pod'  // all your pods will be named with this prefix, followed by a unique id
       idleMinutes 5  // how long the pod will live after no jobs have run on it
       defaultContainer 'maven'
