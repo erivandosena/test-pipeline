@@ -3,6 +3,10 @@
 pipeline {
   
   environment {
+    JENKINS_URL = "http://jenkins.jenkins.svc.cluster.local"
+    JENKINS_TUNNEL = "jenkins.jenkins.svc.cluster.local:50000"
+    JENKINS_AGENT_NAME = "jnlp-slave"
+    JENKINS_AGENT_WORKDIR = "/home/jenkins/agent"
     PROJECT = "jenkins-cd-k8s"
     APP_NAME = "sample-app"
     IMAGE_TAG = "erivando/${APP_NAME}:${env.BUILD_NUMBER}"
@@ -10,7 +14,7 @@ pipeline {
   
   agent {
     kubernetes {
-      inheritFrom 'sample-app'  // all your pods will be named with this prefix, followed by a unique id
+      inheritFrom 'jnlp-slave'  // all your pods will be named with this prefix, followed by a unique id
       idleMinutes 5  // how long the pod will live after no jobs have run on it
       yamlFile 'build-pod.yaml'  // path to the pod definition relative to the root of our project 
       //defaultContainer 'jnlp'
