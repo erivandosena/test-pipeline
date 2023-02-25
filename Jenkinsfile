@@ -28,11 +28,14 @@ pipeline {
       inheritFrom 'jnlp'  // all your pods will be named with this prefix, followed by a unique id
       idleMinutes 5  // how long the pod will live after no jobs have run on it
       defaultContainer 'maven'
-      git url: 'https://github.com/erivandosena/test-pipeline.git', branch: '*/master'
     }
   }
-  
   stages {
+    stage('Checkout Source') {
+      steps {
+        git url: 'https://github.com/erivandosena/test-pipeline.git', branch: '*/master'
+      }
+    }
     stage('CI/CD Preparing/Initialize') {
       steps {
         script{
@@ -43,7 +46,7 @@ pipeline {
           }
         }
       }
-    }          
+    }
     stage('Build') {
       steps {  // no container directive is needed as the maven container is the default
         echo "2. Build Application"
