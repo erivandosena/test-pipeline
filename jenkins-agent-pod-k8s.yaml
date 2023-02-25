@@ -1,4 +1,4 @@
-#
+##
 #  Author: Erivando Sena
 #  Date: 2023-02-27 06:53:33 +0000 (Seg, 25 Feb 2023)
 #
@@ -38,20 +38,20 @@ spec:
   priorityClassName: high-priority-apps  # requer priorityclass.yaml
   affinity:
     # Evite preempção que pode causar falhas de build
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: cloud.google.com/gke-preemptible
-                operator: DoesNotExist
-              - key: eks.amazonaws.com/capacityType
-                operator: NotIn
-                values:
-                  - SPOT
-              - key: kubernetes.azure.com/scalesetpriority
-                operator: NotIn
-                values:
-                  - spot
+    # nodeAffinity:
+    #   requiredDuringSchedulingIgnoredDuringExecution:
+    #     nodeSelectorTerms:
+    #       - matchExpressions:
+    #           - key: cloud.google.com/gke-preemptible
+    #             operator: DoesNotExist
+    #           - key: eks.amazonaws.com/capacityType
+    #             operator: NotIn
+    #             values:
+    #               - SPOT
+    #           - key: kubernetes.azure.com/scalesetpriority
+    #             operator: NotIn
+    #             values:
+    #               - spot
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 100
@@ -403,4 +403,3 @@ spec:
         path: /var/run/docker.sock
   #imagePullSecrets:
   #- name: harbor-registro
-          
