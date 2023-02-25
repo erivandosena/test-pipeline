@@ -54,7 +54,9 @@ pipeline {
     stage('Build') {
       steps {  // no container directive is needed as the maven container is the default
         echo "2. Build Application"
-        sh "mvn clean package -Dmy.variable=${APP_NAME}"   
+        container('maven') { 
+          sh "mvn clean package -Dmy.variable=${APP_NAME}"
+        }
       }
     }
     stage('Build Docker Image') {
@@ -79,14 +81,16 @@ pipeline {
     stage('Deploy') {
       steps {
         echo "5. Deploy to K8S Cluster"
-        /*
-        sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
-        sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
-        */
-        sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'  
-        sh 'chmod u+x ./kubectl'  
-        sh './kubectl apply -f k8s.yaml'      
-        sh "kubectl apply -f k8s.yaml --record"
+        container('maven') {
+          /*
+          sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
+          sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
+          */
+          sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'  
+          sh 'chmod u+x ./kubectl'  
+          sh './kubectl apply -f k8s.yaml'      
+          sh "kubectl apply -f k8s.yaml --record"
+        }
       }
     }
   }
