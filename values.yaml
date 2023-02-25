@@ -9,7 +9,7 @@ spec:
   containers:  # lista de contêineres que você deseja apresentar para sua compilação, pode definir um contêiner padrão no Jenkinsfile
     - name: maven
       image: erivando/maven:3.9.0-openjdk-11 # imagem customizada
-      command: ["tail", "-f", "/dev/null"]  # este ou qualquer comando que seja basicamente um noop é necessário, isso é para que não substitua o ponto de entrada do contêiner base
+      #command: ["tail", "-f", "/dev/null"]  # este ou qualquer comando que seja basicamente um noop é necessário, isso é para que não substitua o ponto de entrada do contêiner base
       imagePullPolicy: Always # use o cache ou puxe a imagem para o agente
       resources:  # limites e recursos que o build contém
         requests:
@@ -20,7 +20,7 @@ spec:
           memory: "3Gi"
     - name: docker
       image: docker:20.10 #dti-registro.unilab.edu.br/unilab/docker:latest
-      command: ["tail", "-f", "/dev/null"]
+      #command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: IfNotPresent
       resources: {}
       volumeMounts:
@@ -30,14 +30,5 @@ spec:
     - name: docker
       hostPath:
         path: /var/run/docker.sock
-  imagePullSecrets:
-  - name: harbor-registro
----
-apiVersion: v1
-kind: Secret
-data:
-  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2R0aS1yZWdpc3Ryby51bmlsYWIuZWR1LmJyIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJwYXNzd29yZCI6IkR0aUB1bmlsYWIyMDIzIiwiZW1haWwiOiJkaXNpckB1bmlsYWIuZWR1LmJyIiwiYXV0aCI6IllXUnRhVzQ2UkhScFFIVnVhV3hoWWpJd01qTT0ifX19
-metadata:
-  name: harbor-registro 
-  namespace: jenkins
-type: kubernetes.io/dockerconfigjson
+  #imagePullSecrets:
+  #- name: harbor-registro
