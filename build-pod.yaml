@@ -14,7 +14,7 @@ spec:
           cpu: "5000m"
           memory: "3Gi"
     - name: docker
-      image: docker:20.10.2-git
+      image: dti-registro.unilab.edu.br/unilab/docker:latest
       #command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
       resources: {}
@@ -25,3 +25,5 @@ spec:
     - name: docker
       hostPath:
         path: /var/run/docker.sock
+  imagePullSecrets:
+  - name: docker-regcred
