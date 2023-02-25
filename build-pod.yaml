@@ -25,5 +25,5 @@ spec:
     - name: docker
       hostPath:
         path: /var/run/docker.sock
-  imagePullSecrets:
-  - name: harbor-registro
+  #imagePullSecrets:
+  #- name: harbor-registro
