@@ -1,5 +1,10 @@
 #!/usr/bin/env groovy
 
+def loadValuesYaml(){
+  def valuesYaml = readYaml (file: './values.yaml')
+  return valuesYaml;
+}
+
 pipeline {
   environment {
     /*
