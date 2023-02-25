@@ -34,7 +34,7 @@ pipeline {
       steps {
         echo "3. Build of Image"
         container('docker') {  
-          sh "docker build -t erivando/sample-app:${build_tag} ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container, 
+          sh "docker build -t ${IMAGE_TAG} ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container, 
         }
       }
     }
@@ -43,7 +43,7 @@ pipeline {
         echo "4. Push of Image"
         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${dockerHubUser} -p ${dockerHubPassword}"
-          sh "docker push erivando/sample-app:${build_tag}"        // which is just connecting to the host docker deaemon
+          sh "docker push ${IMAGE_TAG}"        // which is just connecting to the host docker deaemon
         }
       }
     }
