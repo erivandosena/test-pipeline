@@ -47,6 +47,7 @@ pipeline {
         script{
           valuesYaml = loadValuesYaml()
           println valuesYaml.getClass()
+        }
       }
     }
     stage('Build') {
