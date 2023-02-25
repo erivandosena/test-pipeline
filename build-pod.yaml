@@ -18,7 +18,7 @@ spec:
     - name: docker
       image: docker:20.10 #dti-registro.unilab.edu.br/unilab/docker:latest
       #command: ["tail", "-f", "/dev/null"]
-      imagePullPolicy: Always
+      imagePullPolicy: IfNotPresent
       resources: {}
       volumeMounts:
         - name: docker
