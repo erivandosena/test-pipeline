@@ -16,7 +16,7 @@ pipeline {
   
   agent {
     kubernetes {
-      inheritFrom 'jnlp'  // all your pods will be named with this prefix, followed by a unique id
+      inheritFrom 'slave'  // all your pods will be named with this prefix, followed by a unique id
       idleMinutes 5  // how long the pod will live after no jobs have run on it
       //yamlFile 'secret-harbor.yaml'  // path to the pod definition relative to the root of our project 
       yamlFile 'build-pod.yaml'
