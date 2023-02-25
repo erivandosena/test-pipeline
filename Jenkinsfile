@@ -31,17 +31,27 @@ pipeline {
     }
   }
   stages {
-    stage('CI/CD Initialize') {
+    stage('CI/CD Preparing/Initialize') {
       steps {
-        script{
-          valuesYaml = loadValuesYaml()
-          println valuesYaml.getClass()
+        git url: 'https://github.com/erivandosena/test-pipeline.git'
+          script{
+            valuesYaml = loadValuesYaml()
+            print valuesYaml.getClass()
+            valuesYaml.each{
+                 println it
+            }
+          }
         }
       }
-    }
+    }           
     stage('Build') {
       steps {  // no container directive is needed as the maven container is the default
         echo "2. Build Application"
+        script{
+          dir (valuesYaml.build.projectFolder){
+            sh "${valuesYaml.build.buildCommand}"
+          }
+        }
         //container('maven') { 
           sh "mvn clean package -Dmy.variable=${APP_NAME}"
         //}
