@@ -11,7 +11,7 @@ pipeline {
     */
     APP_NAME = "sample-app"
     DOCKER_TAG = getDockerTag()
-    BUILD_NUMBER = ${env.BUILD_NUMBER}
+    BUILD_NUMBER = "${env.BUILD_NUMBER}"
     IMAGE_TAG = "erivando/${APP_NAME}:${DOCKER_TAG}"
   }
   agent {
