@@ -10,7 +10,9 @@ pipeline {
     PROJECT = "jenkins-cd-k8s"
     */
     APP_NAME = "sample-app"
-    IMAGE_TAG = "erivando/${APP_NAME}:${env.BUILD_NUMBER}"
+    DOCKER_TAG = getDockerTag()
+    BUILD_NUMBER = ${env.BUILD_NUMBER}
+    IMAGE_TAG = "erivando/${APP_NAME}:${DOCKER_TAG}"
   }
   agent {
     kubernetes {
