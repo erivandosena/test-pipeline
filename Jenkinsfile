@@ -31,25 +31,6 @@ pipeline {
     }
   }
   stages {
-    stage('Checkout Source') {
-      steps {
-        
-        //git url: 'https://github.com/erivandosena/test-pipeline.git', branch: '*/master'
-
-        if (params.commit_sha?.trim()) {
-          print "Checking out commit ${commit_sha}"
-
-          scmVars = checkout([
-            $class: 'GitSCM',
-            branches: [[name: params.commit_sha]],
-          ])
-        } else {
-          print "Checking out master"
-          scmVars = checkout(scm)
-        }
-        
-      }
-    }
     stage('CI/CD Preparing/Initialize') {
       steps {
         script{
