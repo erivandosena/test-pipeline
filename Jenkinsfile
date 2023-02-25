@@ -1,10 +1,5 @@
 #!/usr/bin/env groovy
 
-def loadValuesYaml(){
-  def valuesYaml = readYaml (file: './values.yaml')
-  return valuesYaml;
-}
-
 def getDockerTag(){
   def tag = sh script: 'git rev-parse HEAD', returnStdout: true
   return tag
