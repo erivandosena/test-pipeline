@@ -17,7 +17,9 @@ spec:
           memory: "3Gi"
       env:
       - name: JENKINS_URL
-        value: ""
+        value: "http://jenkins.jenkins.svc.cluster.local"
+      - name: JENKINS_TUNNEL
+        value: "jenkins.jenkins.svc.cluster.local:"
     - name: docker
       image: docker:20.10 #dti-registro.unilab.edu.br/unilab/docker:latest
       #command: ["tail", "-f", "/dev/null"]
