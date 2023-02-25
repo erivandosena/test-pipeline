@@ -31,12 +31,10 @@ pipeline {
     }
   }
   
-  properties([parameters([choice(choices: ['*/master'], description: 'Select desired branch to build', name: 'branches')])])
-  
   stages {
     stage('CI/CD Preparing/Initialize') {
       steps {
-        git url: 'https://github.com/erivandosena/test-pipeline.git', branch: "${params.branches}"
+        git branch: '*/master', url: 'https://github.com/erivandosena/test-pipeline'
         script{
           valuesYaml = loadValuesYaml()
           print valuesYaml.getClass()
