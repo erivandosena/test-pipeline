@@ -11,35 +11,73 @@ def getDockerTag(){
 }
 
 pipeline {
-  environment {
-    JENKINS_URL = "http://jenkins.jenkins.svc.cluster.local"
-    JENKINS_TUNNEL = "jenkins.jenkins.svc.cluster.local:"
-    JENKINS_AGENT_WORKDIR = "/home/jenkins/agent"
-    JENKINS_AGENT_NAME = "jnlp-pod-slave"
-    PROJECT = "jenkins-cd-k8s"
-    APP_NAME = "sample-app"
-    DOCKER_TAG = getDockerTag()
-    IMAGE_TAG = "erivando/${APP_NAME}:${DOCKER_TAG}"
-    BUILD_NUMBER = "${env.BUILD_NUMBER}"
-  }
   agent {
     kubernetes {
-      //label 'mypod'
+      yamlFile './values.yaml'
       inheritFrom 'jnlp'  // all your pods will be named with this prefix, followed by a unique id
       idleMinutes 5  // how long the pod will live after no jobs have run on it
       defaultContainer 'maven'
     }
   }
+  options {
+    timestamps()
+    timeout(time: 2, unit: 'HOURS')
+    parallelsAlwaysFailFast()
+    rateLimitBuilds(throttle: [count: 3, durationName: 'minute', userBoost: false])
+    buildDiscarder(logRotator(numToKeepStr: '100'))
+    //gitLabConnection('Gitlab')
+    //gitlabCommitStatus(name: "Jenkins build $BUILD_DISPLAY_NAME")
+    ansiColor('xterm')
+  }
+  triggers {
+    // replace 0 with H (hash) to randomize starts to spread load and avoid spikes
+    pollSCM('H/10 * * * *')  // run every 10 mins, at a consistent offset time within that 10 min interval
+    cron('H 10 * * 1-5')  // run at 10:XX:XX am every weekday morning, ie. some job fixed time between 10-11am
+  }
+  environment {
+    APP_NAME = "sample-app"
+    DOCKER_TAG = getDockerTag()
+    IMAGE_TAG = "erivando/${APP_NAME}:${DOCKER_TAG}"
+    BUILD_NUMBER = "${env.BUILD_NUMBER}"
+    // se criar imagens docker em agentes, isso habilita o BuildKit, que cria automaticamente camadas de imagens em paralelo sempre que possível (especialmente útil para compilações de vários estágios)
+    // adicione também '--build-arg BUILDKIT_INLINE_CACHE=1' ao comando docker build
+    DOCKER_BUILDKIT = 1
+    TF_IN_AUTOMATION = 1  // altera a saída para suprimir as sugestões da CLI para comandos relacionados
+    THREAD_COUNT = 6
+    //SLACK_MESSAGE = "Pipeline <${env.JOB_DISPLAY_URL}|${env.JOB_NAME}> - <${env.RUN_DISPLAY_URL}|Build #${env.BUILD_NUMBER}>"
+    // Altera o tempo limite do trabalho (o padrão é 1800 segundos; defina como 0 para desabilitar
+    SEMGREP_TIMEOUT = "300"
+  }
   stages {
-    stage('CI/CD Preparing/Initialize') {
+    // geralmente não é necessário ao obter o Jenkinsfile do Git SCM no Pipeline / Multibranch Pipeline, isso está implícito
+    stage ('Checkout') {
       steps {
-        script{
-          valuesYaml = loadValuesYaml()
-          print valuesYaml.getClass()
-          valuesYaml.each{
-            println it
-          }
+        milestone(ordinal: null, label: "Milestone: Checkout")
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/erivandosena/test-pipeline']]])
+        //container('git') {
+        //  git credentialsId: 'GitHub', url: 'https://github.com/HariSekhon/Jenkins.git', branch: 'master'
+        //}
+      }
+    }
+    stage('CI/CD Initialize Setup') {
+      steps {
+        milestone(ordinal: null, label: "Milestone: Setup")
+        label 'Setup'
+        script {
+          // reescrever o nome da compilação para incluir o ID do commit
+          currentBuild.displayName = "$BUILD_DISPLAY_NAME (${GIT_COMMIT.take(8)})"
+          // salve o caminho da área de trabalho para usar nos testes
+          workspace = "$env.WORKSPACE"
         }
+        // execute alguns comandos shell para configurar as coisas
+        sh '''
+          for x in /etc/mybuild.d/*.sh; do
+            if [ -r "$x" ]; then
+              source $x;
+            fi;
+          done;
+        '''
+        printEnv()
       }
     }
     stage('Build') {
