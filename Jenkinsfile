@@ -30,10 +30,13 @@ pipeline {
       defaultContainer 'maven'
     }
   }
+  
+  properties([parameters([choice(choices: ['master', 'feature_1'], description: 'Select desired branch to build', name: 'branches')])])
+  
   stages {
     stage('CI/CD Preparing/Initialize') {
       steps {
-        git branch: 'master', url: 'https://github.com/erivandosena/test-pipeline.git'
+        git url: 'https://github.com/erivandosena/test-pipeline.git', branch: "${params.branches}"
         script{
           valuesYaml = loadValuesYaml()
           print valuesYaml.getClass()
