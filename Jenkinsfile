@@ -37,7 +37,7 @@ pipeline {
           url: 'https://github.com/erivandosena/test-pipeline.git',
           branch: "*/master"
         )
-        git url: 'https://github.com/erivandosena/test-pipeline.git'
+        //git url: 'https://github.com/erivandosena/test-pipeline.git'
         script{
           valuesYaml = loadValuesYaml()
           print valuesYaml.getClass()
