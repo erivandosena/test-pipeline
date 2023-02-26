@@ -87,7 +87,7 @@ pipeline {
       steps {
         echo "3. Build of Image"
         container('docker') {  
-          sh "docker build -t ${IMAGE_TAG} ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container, 
+          sh "docker build -t ${IMAGE_TAG}" .  // when we run docker in this step, we're running it via a shell on the docker build-pod container, 
         }
       }
     }
