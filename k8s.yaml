@@ -27,13 +27,12 @@ spec:
     spec:
       containers:
         - name: sample-app
-          image: erivando/sample-app
-          env:
-            - name: branch
-              value: master
+          image: ${DOCKER_IMAGE}
           ports:
             - containerPort: 80
               protocol: TCP
               name: web
-      imagePullSecrets:
-        - name: dockerhub
+      #imagePullSecrets:
+      #  - name: dockerhub
+      
+      
