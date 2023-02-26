@@ -1,10 +1,5 @@
 #!/usr/bin/env groovy
 
-def getDockerTag(){
-  def tag = sh script: 'git rev-parse HEAD', returnStdout: true
-  return tag
-}
-
 pipeline {
   agent {
     kubernetes {
@@ -31,10 +26,8 @@ pipeline {
   }
   environment {
     APP_NAME = "sample-app"
-    //DOCKER_TAG = getDockerTag()
-    DOCKER_TAG = "$GIT_COMMIT" // ou "$GIT_BRANCH" que pode ser definido como uma tag git semver
-    //DOCKER_TAG = "${env.GIT_BRANCH.split('/')[-1]}"  //retire a 'origin/' inicial de 'origin/branch'
-    //IMAGE_TAG = "erivando/${APP_NAME}:${DOCKER_TAG}"
+    //DOCKER_TAG = "$GIT_COMMIT" // ou "$GIT_BRANCH" que pode ser definido como uma tag git semver
+    DOCKER_TAG = "${env.GIT_BRANCH.split('/')[-1]}"  //retire a 'origin/' inicial de 'origin/branch'
     DOCKER_IMAGE = "erivando/${APP_NAME}"
     BUILD_NUMBER = "${env.BUILD_NUMBER}"
     // se criar imagens docker em agentes, isso habilita o BuildKit, que cria automaticamente camadas de imagens em paralelo sempre que possível (especialmente útil para compilações de vários estágios)
