@@ -119,6 +119,7 @@ pipeline {
         echo "5. Deploy to K8S Cluster"
         //container('maven') {
           sh "sed -i 's/<APP_NAMESPACE>/${env.APP_NAMESPACE}/' k8s.yaml"
+          sh "sed -i 's/<APP_NAME>/${env.APP_NAME}/' k8s.yaml"
           sh "sed -i 's/<IMAGE_TAG>/${env.IMAGE_TAG}/' k8s.yaml"
           
           // https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
