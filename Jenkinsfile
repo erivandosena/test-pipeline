@@ -127,7 +127,7 @@ pipeline {
           sh "chmod u+x ./kubectl"
           sh "install -o root -g root -m 0755 kubectl /usr/bin/kubectl"
           //sh "kubectl cluster-info"
-          sh "kubectl version --client"
+          sh "kubectl version --client -ojson"
           //sh './kubectl apply -f k8s.yaml'      
           //sh "kubectl apply -f k8s.yaml --record"
           //kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'K8s-c2-config'
@@ -139,6 +139,7 @@ pipeline {
             Nota: Quando --record não é sinalizador, na tabela, CHANGE-CAUSE estará apenas <none>
             */
             sh "kubectl apply -f k8s.yaml --record"
+            sh "kubectl get all -n app-pipeline-cicd"
           }
           /*
           kubeconfig(credentialsId: 'K8s-c2-config', serverUrl: 'https://kubernetes.docker.internal:6443') {
