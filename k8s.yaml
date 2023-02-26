@@ -7,7 +7,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sample-app
+  name: <APP_NAME>
   namespace: <APP_NAMESPACE>
 spec:
   replicas: 1
@@ -17,7 +17,7 @@ spec:
         app: <APP_NAME>
     spec:
       containers:
-      - name: sample-app
+      - name: <APP_NAME>
         image: <IMAGE_TAG>
         # resources:
         #   requests: {}
@@ -47,7 +47,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: sample-app
+  name: <APP_NAME>-svc
   namespace: <APP_NAMESPACE>
   labels:
     app: <APP_NAME>
@@ -69,7 +69,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-   name: <APP_NAME>-svc
+   name: <APP_NAME>
    namespace: <APP_NAMESPACE>
    annotations:
       haproxy.org/check: enabled
