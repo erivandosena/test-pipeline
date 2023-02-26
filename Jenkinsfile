@@ -125,7 +125,7 @@ pipeline {
           //sh './kubectl apply -f k8s.yaml'      
           //sh "kubectl apply -f k8s.yaml --record"
           //kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'K8s-c2-config'
-          withKubeConfig([credentialsId: 'K8s-c2-config', serverUrl: 'https://kubernetes.docker.internal:6443']) {
+          withKubeConfig([credentialsId: 'K8s-c1-config', serverUrl: 'https://10.130.0.45:6443']) {
             /*
             Teoricamente --recordnão é obrigatório, porém, tecnicamente é obrigatório para garantir que as 
             alterações deixem um rastro de auditoria rudimentar e cumpram o processo SRE e a cultura DevOps.
