@@ -126,7 +126,7 @@ pipeline {
           sh 'echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check'
           sh "chmod u+x ./kubectl"
           sh "install -o root -g root -m 0755 kubectl /usr/bin/kubectl"
-          sh "kubectl get nodes -o wide"
+          sh "kubectl cluster-info"
           //sh './kubectl apply -f k8s.yaml'      
           //sh "kubectl apply -f k8s.yaml --record"
           //kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'K8s-c2-config'
