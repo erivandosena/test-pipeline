@@ -98,6 +98,7 @@ pipeline {
         echo "4. Push of Image"
         container('docker') { 
           withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+            sh docker logout
             sh "docker login -u ${dockerHubUser} -p ${dockerHubPassword}"
             //sh "docker push ${IMAGE_TAG}"        // which is just connecting to the host docker deaemon
             milestone(ordinal: null, label: "Milestone: Docker Push")
