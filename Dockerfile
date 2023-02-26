@@ -54,7 +54,7 @@ RUN locale-gen pt_BR.UTF-8
 RUN dpkg-reconfigure locales tzdata -f noninteractive
 
 ENV VERSION ${APP_VERSION}
-ENV APP_NAME "sample-app-${VERSION}-SNAPSHOT.jar"
+ENV APP_NAME sample-app-"${VERSION}"-SNAPSHOT.jar
 
 WORKDIR /opt
 
