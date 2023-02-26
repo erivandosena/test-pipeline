@@ -26,7 +26,7 @@ pipeline {
   }
   environment {
     APP_NAME = "sample-app"
-    VERSION = "1.0.0"
+    APP_VERSION = "1.0.0"
     //DOCKER_TAG = "$GIT_COMMIT" // ou "$GIT_BRANCH" que pode ser definido como uma tag git semver
     DOCKER_TAG = "${env.GIT_BRANCH.split('/')[-1]}"  //retire a 'origin/' inicial de 'origin/branch'
     DOCKER_IMAGE = "unlb/${APP_NAME}"
@@ -88,7 +88,7 @@ pipeline {
           timeout(time: 60, unit: 'MINUTES') {
             // check 'DOCKER_BUILDKIT = 1' is set in environment {} section
             //sh "docker build -t '$DOCKER_IMAGE':'$DOCKER_TAG' --build-arg=BUILDKIT_INLINE_CACHE=1 --cache-from '$DOCKER_IMAGE':'$DOCKER_TAG' ."
-            sh "docker build -t '$DOCKER_IMAGE':'$DOCKER_TAG' --build-arg 'COMMIT_SHA=$GIT_COMMIT APP_VERSION=$VERSION BUILDKIT_INLINE_CACHE=1' --cache-from '$DOCKER_IMAGE':'$DOCKER_TAG' ."
+            sh "docker build -t '$DOCKER_IMAGE':'$DOCKER_TAG' --build-arg 'COMMIT_SHA=$GIT_COMMIT APP_VERSION=$APP_VERSION BUILDKIT_INLINE_CACHE=1' --cache-from '$DOCKER_IMAGE':'$DOCKER_TAG' ."
           }
           //sh "docker build -t ${IMAGE_TAG} ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container, 
         }
