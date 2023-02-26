@@ -79,7 +79,7 @@ pipeline {
       steps {  // no container directive is needed as the maven container is the default
         echo "2. Build Application"
         //container('maven') { 
-        sh "mvn clean package -Dmy.variable=${APP_NAME} ${APP_VERSION}"
+        sh "mvn clean package -Dmy.variable=${APP_NAME} -Dmy.variable=${APP_VERSION}"
         //}
       }
     }
