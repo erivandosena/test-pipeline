@@ -26,6 +26,7 @@ pipeline {
   }
   environment {
     APP_NAME = "sample-app"
+    VERSION = "$GIT_COMMIT"
     //DOCKER_TAG = "$GIT_COMMIT" // ou "$GIT_BRANCH" que pode ser definido como uma tag git semver
     DOCKER_TAG = "${env.GIT_BRANCH.split('/')[-1]}"  //retire a 'origin/' inicial de 'origin/branch'
     DOCKER_IMAGE = "erivando/${APP_NAME}"
@@ -75,7 +76,7 @@ pipeline {
       steps {  // no container directive is needed as the maven container is the default
         echo "2. Build Application"
         //container('maven') { 
-          sh "mvn clean package -Dmy.variable=${APP_NAME}"
+        sh "mvn clean package -Dmy.variable=${APP_NAME} -Dmy.variable=${VERSION}"
         //}
       }
     }
