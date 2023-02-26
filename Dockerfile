@@ -6,7 +6,7 @@
 #
 # Build instructions:
 #
-#   docker buildx build -t dti-registro.unilab.edu.br/unilab/sample-app --build-arg 'COMMIT_SHA=$(git rev-parse --short HEAD) APP_VERSION=1.0.0 BUILDKIT_INLINE_CACHE=1' --no-cache .
+#   docker buildx build -t dti-registro.unilab.edu.br/unilab/sample-app --build-arg 'COMMIT_SHA=$(git rev-parse --short HEAD) VERSION=1.0.0 BUILDKIT_INLINE_CACHE=1' --no-cache .
 #   docker push dti-registro.unilab.edu.br/unilab/sample-app
 #
 # Usage:
@@ -20,7 +20,7 @@
 # Environment variables:
 #
 #   COMMIT_SHA: o hash SHA-1 de um determinado commit do Git.
-#   APP_VERSION: usado na tag de imagem ou como parte dos metadados da mesma.
+#   VERSION: usado na tag de imagem ou como parte dos metadados da mesma.
 #
 # Notes:
 #
@@ -43,7 +43,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
   && rm -rf /var/lib/apt/lists/*
 
-ARG APP_VERSION
+ARG VERSION
 ARG COMMIT_SHA
 ENV TZ America/Fortaleza
 ENV LANG pt_BR.UTF-8 
@@ -53,7 +53,7 @@ ENV LANGUAGE pt_BR:pt:en
 RUN locale-gen pt_BR.UTF-8 
 RUN dpkg-reconfigure locales tzdata -f noninteractive
 
-ENV VERSION ${APP_VERSION}
+ENV APP_VERSION ${VERSION}
 ENV APP_NAME sample-app-"${APP_VERSION}"-SNAPSHOT.jar
 
 WORKDIR /opt
@@ -64,7 +64,7 @@ LABEL \
     org.opencontainers.image.vendor="Divisão de Infraestrutura, Segurança da Informação e Redes" \
     org.opencontainers.image.title="Exemplo de Microsserviço de Aplicação em container Docker Linux" \
     org.opencontainers.image.description="sample-app é um software Java usado para demostrar aplicativos dentro de containers." \
-    org.opencontainers.image.version="${APP_VERSION}" \
+    org.opencontainers.image.version="${VERSION}" \
     org.opencontainers.image.url="https://hello-world-test.unilab.edu.br/" \
     org.opencontainers.image.source="https://github.com/erivandosena/test-pipeline" \
     org.opencontainers.image.revision="${COMMIT_SHA}" \
