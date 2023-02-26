@@ -103,7 +103,7 @@ pipeline {
             //sh "docker push ${IMAGE_TAG}"        // which is just connecting to the host docker deaemon
             milestone(ordinal: null, label: "Milestone: Docker Push")
             timeout(time: 15, unit: 'MINUTES') {
-              sh "docker tag '$DOCKER_IMAGE':'$DOCKER_TAG' '$DOCKER_IMAGE':'latest'"
+              sh "docker tag '$DOCKER_IMAGE':'$DOCKER_TAG' '$DOCKER_IMAGE:latest'"
               sh "docker push '$DOCKER_IMAGE':'latest'"
             }
           }
