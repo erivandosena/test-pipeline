@@ -91,7 +91,7 @@ pipeline {
           timeout(time: 60, unit: 'MINUTES') {
             // check 'DOCKER_BUILDKIT = 1' is set in environment {} section
             //sh "docker build -t '$DOCKER_IMAGE':'$DOCKER_TAG' --build-arg=BUILDKIT_INLINE_CACHE=1 --cache-from '$DOCKER_IMAGE':'$DOCKER_TAG' ."
-            sh "docker build -t '$DOCKER_IMAGE':'$DOCKER_TAG' --build-arg 'COMMIT_SHA=$GIT_COMMIT APP_VERSION=$APP_VERSION BUILDKIT_INLINE_CACHE=1' --cache-from '$DOCKER_IMAGE':'$DOCKER_TAG' ."
+            sh "docker build -t '$DOCKER_IMAGE':'$DOCKER_TAG' --build-arg='COMMIT_SHA=$GIT_COMMIT' --build-arg='APP_VERSION=$APP_VERSION' --build-arg='BUILDKIT_INLINE_CACHE=1' --cache-from '$DOCKER_IMAGE':'$DOCKER_TAG' ."
           }
           //sh "docker build -t ${IMAGE_TAG} ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container, 
         }
