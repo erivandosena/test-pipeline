@@ -21,8 +21,8 @@ pipeline {
   }
   triggers {
     // replace 0 with H (hash) to randomize starts to spread load and avoid spikes
-    pollSCM('H/10 * * * *')  // run every 10 mins, at a consistent offset time within that 10 min interval
-    cron('H 10 * * 1-5')  // run at 10:XX:XX am every weekday morning, ie. some job fixed time between 10-11am
+    pollSCM('H/2880 * * * *')  // execute a cada 10 minutos, em um tempo de deslocamento consistente dentro desse intervalo de 10 minutos
+    cron('H 10 * * 1-5')  // executar às 10: XX:XX da manhã todos os dias da semana, ou seja. algum horário fixo de trabalho entre 10-11am
   }
   environment {
     APP_NAME = "sample-app"
