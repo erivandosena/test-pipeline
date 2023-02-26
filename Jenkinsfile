@@ -98,12 +98,12 @@ pipeline {
         echo "4. Push of Image"
         container('docker') { 
           withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-            sh "docker logout"
+            //sh "docker logout"
             sh "docker login -u ${dockerHubUser} -p ${dockerHubPassword}"
             //sh "docker push ${IMAGE_TAG}"        // which is just connecting to the host docker deaemon
             milestone(ordinal: null, label: "Milestone: Docker Push")
             timeout(time: 15, unit: 'MINUTES') {
-              sh "docker tag '$DOCKER_IMAGE':'$DOCKER_TAG' '$DOCKER_IMAGE:latest'"
+              //sh "docker tag '$DOCKER_IMAGE':'$DOCKER_TAG' '$DOCKER_IMAGE:latest'"
               sh "docker push '$DOCKER_IMAGE':'latest'"
             }
           }
@@ -118,12 +118,20 @@ pipeline {
           sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
           sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
           */
+          /*
           sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'  
           sh 'chmod u+x ./kubectl'  
+          */
           //sh './kubectl apply -f k8s.yaml'      
           //sh "kubectl apply -f k8s.yaml --record"
           //kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'K8s-c2-config'
           withKubeConfig([credentialsId: 'K8s-c2-config', serverUrl: 'https://kubernetes.docker.internal:6443']) {
+            /*
+            Teoricamente --recordnão é obrigatório, porém, tecnicamente é obrigatório para garantir que as 
+            alterações deixem um rastro de auditoria rudimentar e cumpram o processo SRE e a cultura DevOps.
+            Exemplo de uso: kubectl rollout history -n docker deployment.apps/docker
+            Nota: Quando --record não é sinalizador, na tabela, CHANGE-CAUSE estará apenas <none>
+            */
             sh "kubectl apply -f k8s.yaml --record"
           }
           /*
