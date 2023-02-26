@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: sample-app
-        image: ${DOCKER_IMAGE}
+        image: unlb/sample-app
         # resources:
         #   requests: {}
         #   limits: {}
