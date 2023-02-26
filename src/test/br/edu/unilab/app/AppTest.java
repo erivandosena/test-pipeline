@@ -1,4 +1,4 @@
-package com.company.app;
+package br.edu.unilab.app;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -25,7 +25,7 @@ public class AppTest
         try {
             new App();
         } catch (Exception e) {
-            fail("Construction failed.");
+            fail("A construção falhou");
         }
     }
 
@@ -34,9 +34,9 @@ public class AppTest
     {
         App.main(null);
         try {
-            assertEquals("Hello World!" + System.getProperty("line.separator"), outContent.toString());
+            assertEquals("Hello DevOps!" + System.getProperty("line.separator"), outContent.toString());
         } catch (AssertionError e) {
-            fail("\"message\" is not \"Hello World!\"");
+            fail("\"message\" is not \"Hello DEVOPS!\"");
         }
     }
 
