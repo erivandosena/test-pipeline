@@ -20,7 +20,7 @@
 # Environment variables:
 #
 #   COMMIT_SHA: o hash SHA-1 de um determinado commit do Git.
-#   VERSION: usado na tag de imagem ou como parte dos metadados da mesma.
+#   APP_VERSION: usado na tag de imagem ou como parte dos metadados da mesma.
 #
 # Notes:
 #
@@ -54,7 +54,7 @@ RUN locale-gen pt_BR.UTF-8
 RUN dpkg-reconfigure locales tzdata -f noninteractive
 
 ENV VERSION ${APP_VERSION}
-ENV APP_NAME sample-app-"${VERSION}"-SNAPSHOT.jar
+ENV APP_NAME sample-app-"${APP_VERSION}"-SNAPSHOT.jar
 
 WORKDIR /opt
 
@@ -64,7 +64,7 @@ LABEL \
     org.opencontainers.image.vendor="Divisão de Infraestrutura, Segurança da Informação e Redes" \
     org.opencontainers.image.title="Exemplo de Microsserviço de Aplicação em container Docker Linux" \
     org.opencontainers.image.description="sample-app é um software Java usado para demostrar aplicativos dentro de containers." \
-    org.opencontainers.image.version="${VERSION}" \
+    org.opencontainers.image.version="${APP_VERSION}" \
     org.opencontainers.image.url="https://hello-world-test.unilab.edu.br/" \
     org.opencontainers.image.source="https://github.com/erivandosena/test-pipeline" \
     org.opencontainers.image.revision="${COMMIT_SHA}" \
