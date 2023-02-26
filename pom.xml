@@ -6,7 +6,7 @@
       <maven>3.0.0</maven>
   </prerequisites>
   
-  <groupId>br.edu.unilab</groupId>
+  <groupId>br.edu.unilab.app</groupId>
   <artifactId>${env.APP_NAME}</artifactId>
   <packaging>jar</packaging>
   <version>${revision}</version>
@@ -14,7 +14,7 @@
   <url>http://maven.apache.org</url>
   
   <properties>
-      <revision>${env.VERSION}</revision>
+      <revision>${env.VERSION}-SNAPSHOT</revision>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
