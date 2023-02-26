@@ -29,7 +29,7 @@ pipeline {
     VERSION = "$GIT_COMMIT"
     //DOCKER_TAG = "$GIT_COMMIT" // ou "$GIT_BRANCH" que pode ser definido como uma tag git semver
     DOCKER_TAG = "${env.GIT_BRANCH.split('/')[-1]}"  //retire a 'origin/' inicial de 'origin/branch'
-    DOCKER_IMAGE = "erivando/${APP_NAME}"
+    DOCKER_IMAGE = "unlb/${APP_NAME}"
     BUILD_NUMBER = "${env.BUILD_NUMBER}"
     // se criar imagens docker em agentes, isso habilita o BuildKit, que cria automaticamente camadas de imagens em paralelo sempre que possível (especialmente útil para compilações de vários estágios)
     // adicione também '--build-arg BUILDKIT_INLINE_CACHE=1' ao comando docker build
