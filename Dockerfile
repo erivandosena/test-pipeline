@@ -40,6 +40,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iputils-ping \
     lsb-release \
     locales \
+    git \
   && rm -rf /var/lib/apt/lists/*
 
 ARG APP_VERSION
