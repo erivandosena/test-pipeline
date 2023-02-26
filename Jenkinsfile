@@ -72,7 +72,7 @@ pipeline {
             fi;
           done;
         '''
-        printenv
+        sh 'printenv'
       }
     }
     stage('Build') {
