@@ -76,7 +76,7 @@ pipeline {
       steps {  // no container directive is needed as the maven container is the default
         echo "2. Build Application"
         //container('maven') { 
-        sh "mvn clean package -Dmy.variable=${APP_NAME}"
+        sh "mvn clean package -Dmy.variable=${APP_NAME} ${APP_VERSION}"
         //}
       }
     }
@@ -115,10 +115,8 @@ pipeline {
       steps {
         echo "5. Deploy to K8S Cluster"
         //container('maven') {
-          /*
-          sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
-          sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
-          */
+          sh "sed -i 's/<IMAGE_TAG>/${IMAGE_TAG}/' k8s.yaml"
+          //sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
           
           // https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
           //sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'
