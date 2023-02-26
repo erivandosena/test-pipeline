@@ -8,8 +8,8 @@
   
   <groupId>br.edu.unilab.app</groupId>
   <artifactId>${env.APP_NAME}</artifactId>
-  <packaging>jar</packaging>
   <version>${revision}</version>
+  <packaging>jar</packaging>
   <name>Example Application ${env.APP_NAME}</name>
   <url>http://maven.apache.org</url>
   
