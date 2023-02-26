@@ -12,7 +12,7 @@
 # Usage:
 #
 #   docker run -it --rm -d -p 8081:80 --name sample-app dti-registro.unilab.edu.br/unilab/sample-app
-#   docker logs -f --tail --until=2s 3s
+#   docker logs -f --tail --until=2s sample-app
 #   docker exec -it sample-app bash
 #
 # Dependencies: java:openjdk-8u111-jre
@@ -20,7 +20,7 @@
 # Environment variables:
 #
 #   COMMIT_SHA: o hash SHA-1 de um determinado commit do Git.
-#   VERSION: usado na tag de imagem ou como parte dos metadados da mesma.
+#   VERSION: usado na tag de imagem ou como parte dos metadados.
 #
 # Notes:
 #
@@ -40,7 +40,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iputils-ping \
     lsb-release \
     locales \
-    git \
   && rm -rf /var/lib/apt/lists/*
 
 ARG VERSION
@@ -54,7 +53,8 @@ RUN locale-gen pt_BR.UTF-8
 RUN dpkg-reconfigure locales tzdata -f noninteractive
 
 ENV APP_VERSION ${VERSION}
-ENV APP_NAME sample-app-"${APP_VERSION}"-SNAPSHOT.jar
+
+ENV APP_NAME "sample-app-${APP_VERSION}-SNAPSHOT.jar"
 
 WORKDIR /opt
 
