@@ -31,8 +31,11 @@ pipeline {
   }
   environment {
     APP_NAME = "sample-app"
-    DOCKER_TAG = getDockerTag()
-    IMAGE_TAG = "erivando/${APP_NAME}:${DOCKER_TAG}"
+    //DOCKER_TAG = getDockerTag()
+    DOCKER_TAG = "$GIT_COMMIT" // ou "$GIT_BRANCH" que pode ser definido como uma tag git semver
+    //DOCKER_TAG = "${env.GIT_BRANCH.split('/')[-1]}"  //retire a 'origin/' inicial de 'origin/branch'
+    //IMAGE_TAG = "erivando/${APP_NAME}:${DOCKER_TAG}"
+    DOCKER_IMAGE = "erivando/${APP_NAME}"
     BUILD_NUMBER = "${env.BUILD_NUMBER}"
     // se criar imagens docker em agentes, isso habilita o BuildKit, que cria automaticamente camadas de imagens em paralelo sempre que possível (especialmente útil para compilações de vários estágios)
     // adicione também '--build-arg BUILDKIT_INLINE_CACHE=1' ao comando docker build
@@ -87,7 +90,12 @@ pipeline {
       steps {
         echo "3. Build of Image"
         container('docker') {  
-          sh "docker build -t ${IMAGE_TAG} ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container, 
+          milestone(ordinal: null, label: "Milestone: Docker Build")
+          timeout(time: 60, unit: 'MINUTES') {
+            // check 'DOCKER_BUILDKIT = 1' is set in environment {} section
+            sh "docker build -t '$DOCKER_IMAGE':'$DOCKER_TAG' --build-arg=BUILDKIT_INLINE_CACHE=1 --cache-from '$DOCKER_IMAGE':'$DOCKER_TAG' ."
+          }
+          //sh "docker build -t ${IMAGE_TAG} ."  // when we run docker in this step, we're running it via a shell on the docker build-pod container, 
         }
       }
     }
@@ -97,7 +105,11 @@ pipeline {
         container('docker') { 
           withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
             sh "docker login -u ${dockerHubUser} -p ${dockerHubPassword}"
-            sh "docker push ${IMAGE_TAG}"        // which is just connecting to the host docker deaemon
+            //sh "docker push ${IMAGE_TAG}"        // which is just connecting to the host docker deaemon
+            milestone(ordinal: null, label: "Milestone: Docker Push")
+            timeout(time: 15, unit: 'MINUTES') {
+              sh "docker push '$DOCKER_IMAGE':'$DOCKER_TAG'"
+            }
           }
         }
       }
