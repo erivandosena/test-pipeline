@@ -104,7 +104,7 @@ pipeline {
             milestone(ordinal: null, label: "Milestone: Docker Push")
             timeout(time: 15, unit: 'MINUTES') {
               //sh "docker tag '$DOCKER_IMAGE':'$DOCKER_TAG' '$DOCKER_IMAGE:latest'"
-              sh "docker push '$DOCKER_IMAGE':'latest'"
+              sh "docker push '$DOCKER_IMAGE':'$DOCKER_TAG'"
             }
           }
         }
@@ -127,7 +127,7 @@ pipeline {
           //kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'K8s-c2-config'
           withKubeConfig([credentialsId: 'K8s-c1-config', serverUrl: 'https://10.130.0.45:6443']) {
             /*
-            Teoricamente --recordnão é obrigatório, porém, tecnicamente é obrigatório para garantir que as 
+            Teoricamente --record não é obrigatório, porém, tecnicamente torna-se obrigatório para garantir que as 
             alterações deixem um rastro de auditoria rudimentar e cumpram o processo SRE e a cultura DevOps.
             Exemplo de uso: kubectl rollout history -n docker deployment.apps/docker
             Nota: Quando --record não é sinalizador, na tabela, CHANGE-CAUSE estará apenas <none>
