@@ -113,7 +113,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo "5. Deploy to K8S Cluster"
-        container('maven') {
+        //container('maven') {
           /*
           sh "sed -i 's/<BUILD_TAG>/${build_tag}/' k8s.yaml"
           sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
@@ -122,8 +122,16 @@ pipeline {
           sh 'chmod u+x ./kubectl'  
           //sh './kubectl apply -f k8s.yaml'      
           //sh "kubectl apply -f k8s.yaml --record"
-          kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'K8s-c2-config'
-        }
+          //kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'K8s-c2-config'
+          withKubeConfig([credentialsId: 'K8s-c2-config', serverUrl: 'https://kubernetes.docker.internal:6443']) {
+            sh "kubectl apply -f k8s.yaml --record"
+          }
+          /*
+          kubeconfig(credentialsId: 'K8s-c2-config', serverUrl: 'https://kubernetes.docker.internal:6443') {
+              // some block
+          }
+          */
+        //}
       }
     }
   }
