@@ -21,7 +21,7 @@ pipeline {
   }
   triggers {
     // replace 0 with H (hash) to randomize starts to spread load and avoid spikes
-    pollSCM('H/2880 * * * *')  // execute a cada 10 minutos, em um tempo de deslocamento consistente dentro desse intervalo de 10 minutos
+    //pollSCM('H/60 * * * *')  // execute a cada 60 minutos, em um tempo de deslocamento consistente dentro desse intervalo de 60 minutos
     cron('H 10 * * 1-5')  // executar às 10: XX:XX da manhã todos os dias da semana, ou seja. algum horário fixo de trabalho entre 10-11am
   }
   environment {
