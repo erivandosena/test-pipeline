@@ -27,6 +27,7 @@ pipeline {
   environment {
     APP_NAME = "sample-app"
     APP_VERSION = "1.0.0"
+    APP_NAMESPACE = "app-pipeline-cicd"
     //DOCKER_TAG = "$GIT_COMMIT" // ou "$GIT_BRANCH" que pode ser definido como uma tag git semver
     DOCKER_TAG = "${env.GIT_BRANCH.split('/')[-1]}"  //retire a 'origin/' inicial de 'origin/branch'
     DOCKER_IMAGE = "unlb/${APP_NAME}"
@@ -62,13 +63,15 @@ pipeline {
           workspace = "$env.WORKSPACE"
         }
         // execute alguns comandos shell para configurar as coisas
+        /*
         sh '''
-          for x in /etc/mybuild.d/*.sh; do
+          for x in /etc/build.d/*.sh; do
             if [ -r "$x" ]; then
               source $x;
             fi;
           done;
         '''
+        */
         sh 'printenv'
       }
     }
@@ -115,8 +118,8 @@ pipeline {
       steps {
         echo "5. Deploy to K8S Cluster"
         //container('maven') {
-          sh "sed -i 's/<IMAGE_TAG>/${IMAGE_TAG}/' k8s.yaml"
-          //sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' k8s.yaml"
+          sh "sed -i 's/<APP_NAMESPACE>/${env.APP_NAMESPACE}/' k8s.yaml"
+          sh "sed -i 's/<IMAGE_TAG>/${env.IMAGE_TAG}/' k8s.yaml"
           
           // https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
           //sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'
