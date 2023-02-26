@@ -1,4 +1,4 @@
-package com.company.app;
+package br.edu.unilab.app;
 
 /**
  * Hello world!
@@ -6,7 +6,7 @@ package com.company.app;
 public class App
 {
 
-    private final String message = "Hello World!";
+    private final String message = "Hello DEVOPS!";
 
     public App() {}
 
