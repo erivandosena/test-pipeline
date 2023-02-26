@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: sample-app
-        image: unlb/sample-app
+        image: <IMAGE_TAG>
         # resources:
         #   requests: {}
         #   limits: {}
