@@ -29,6 +29,29 @@
   </dependencies>
   
   <build>
+    
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <sourceDirectory>main</sourceDirectory>
+    <testSourceDirectory>test</testSourceDirectory>
+    
+    <resources>
+      <resource>
+        <directory>main</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    
+    <testResources>
+      <testResource>
+        <directory>test</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </testResource>
+    </testResources>
+    
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -41,9 +64,11 @@
       
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.0.2</version>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
         <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
