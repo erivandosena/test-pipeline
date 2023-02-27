@@ -142,7 +142,7 @@ pipeline {
             Nota: Quando --record não é sinalizador, na tabela, CHANGE-CAUSE estará apenas <none>
             */
             sh "kubectl apply -f k8s.yaml --record"
-            sh "kubectl get all -n $APP_NAMESPACE"
+            sh "kubectl get all,ing -n $APP_NAMESPACE"
           }
           /*
           kubeconfig(credentialsId: 'K8s-c2-config', serverUrl: 'https://kubernetes.docker.internal:6443') {
