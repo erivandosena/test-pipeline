@@ -15,7 +15,7 @@
 #   docker logs -f --tail --until=2s sample-app
 #   docker exec -it sample-app bash
 #
-# Dependencies: java:openjdk-8u111-jre
+# Dependencies: openjdk:11.0-jre-bullseye
 #
 # Environment variables:
 #
@@ -32,11 +32,6 @@
 FROM openjdk:11.0-jre-bullseye
 
 ENV DEBIAN_FRONTEND noninteractive
-
-#RUN rm -rf /etc/apt/sources.list.d/*
-#RUN echo "deb http://ftp.us.debian.org/debian stable main contrib" > /etc/apt/sources.list
-#RUN apt-get install debian-archive-keyring
-#RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 RUN apt-get update && apt-get upgrade -y \
   && apt-get autoremove -y \
@@ -78,4 +73,6 @@ LABEL \
     org.opencontainers.image.company="Universidade da Integração Internacional da Lusofonia Afro-Brasileira (UNILAB)" \
     org.opencontainers.image.maintainer="DTI/Unilab"
 
-CMD ["java", "-jar", "opt/${APP_NAME}"]
+#CMD ["java", "-jar", "opt/$APP_NAME"]
+
+ENTRYPOINT java -jar opt/$APP_NAME
