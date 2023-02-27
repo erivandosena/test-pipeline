@@ -60,6 +60,8 @@ WORKDIR /opt
 
 ADD "${PWD}/target/${APP_NAME}" /opt
 
+EXPOSE 80 443
+
 LABEL \
     org.opencontainers.image.vendor="Divisão de Infraestrutura, Segurança da Informação e Redes" \
     org.opencontainers.image.title="Exemplo de Microsserviço de Aplicação em container Docker Linux" \
@@ -73,5 +75,8 @@ LABEL \
     org.opencontainers.image.company="Universidade da Integração Internacional da Lusofonia Afro-Brasileira (UNILAB)" \
     org.opencontainers.image.maintainer="DTI/Unilab"
 
-ENTRYPOINT java -jar $APP_NAME
-#CMD ["java", "-jar", "$APP_NAME"]
+
+#ENTRYPOINT java -jar $APP_NAME
+
+ENTRYPOINT ["java","-XX:-BytecodeVerificationLocal","-XX:-BytecodeVerificationRemote","-XX:CICompilerCount=3","-XX:InitialHeapSize=268435456","-XX:+ManagementServer","-XX:MaxHeapSize=4263510016","-XX:MaxNewSize=2147483648","-XX:MinHeapDeltaBytes=524288","-XX:NewSize=89128960","-XX:OldSize=179306496","-XX:TieredStopAtLevel=1","-XX:+UseCompressedClassPointers","-XX:+UseCompressedOops","-XX:-UseLargePagesIndividualAllocation","-XX:+UseParallelGC","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=dev","-jar","$APP_NAME"]
+
