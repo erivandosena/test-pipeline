@@ -73,6 +73,4 @@ LABEL \
     org.opencontainers.image.company="Universidade da Integração Internacional da Lusofonia Afro-Brasileira (UNILAB)" \
     org.opencontainers.image.maintainer="DTI/Unilab"
 
-#CMD ["java", "-jar", "opt/$APP_NAME"]
-
 ENTRYPOINT java -jar opt/$APP_NAME
