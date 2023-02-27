@@ -81,7 +81,7 @@ pipeline {
         //container('maven') { 
         //sh "mvn clean package -Dmy.variable=${APP_NAME} -Dmy.variable=${APP_VERSION}"
         sh "mvn clean verify"
-        ah "mvn install"
+        sh "mvn install"
         sh "mvn archetype:generate -DgroupId=br.edu.unilab.app -DartifactId=${APP_NAME} -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false -Dmy.variable=${APP_NAME} -Dmy.variable=${APP_VERSION}"
         //}
       }
