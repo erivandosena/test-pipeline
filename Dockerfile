@@ -29,25 +29,24 @@
 #
 # Version: 1.0
 
-FROM java:openjdk-8u111-jre
+FROM openjdk:11.0-jre-bullseye
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN rm -rf /etc/apt/sources.list.d/*
-RUN echo "deb http://ftp.us.debian.org/debian stable main contrib" > /etc/apt/sources.list
-RUN apt-get install debian-archive-keyring
-RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+#RUN rm -rf /etc/apt/sources.list.d/*
+#RUN echo "deb http://ftp.us.debian.org/debian stable main contrib" > /etc/apt/sources.list
+#RUN apt-get install debian-archive-keyring
+#RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 RUN apt-get update && apt-get upgrade -y \
-  && apt-get dist-upgrade -y \
-  && apt-get autoremove -y \
   && apt-get install --force-yes --no-install-recommends \
     curl \
     telnet \
     iputils-ping \
     lsb-release \
     locales \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && apt-get autoremove -y
 
 ARG VERSION
 ARG COMMIT_SHA
