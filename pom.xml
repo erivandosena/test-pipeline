@@ -6,12 +6,43 @@
 
     <!-- The project coordinates -->
     <groupId>br.edu.unilab</groupId>
+    <packaging>jar</packaging>
     <artifactId>${env.APP_NAME}</artifactId>
     <version>${env.APP_VERSION}-SNAPSHOT</version>
+    <name>${env.APP_NAME}</name>
+    <description>Project ${env.APP_NAME}</description>
+    <url>https://hello-world-test.unilab.edu.br/</url>
 
+    <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <revision>${env.APP_VERSION}-SNAPSHOT</revision>
+    </properties>
+
+    <dependencies>
+        <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+        <scope>test</scope>
+        </dependency>
+    </dependencies>
+         
     <!-- The project build settings -->
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <!-- The Maven Compiler Plugin compiles Java sources -->
                 <groupId>org.apache.maven.plugins</groupId>
@@ -29,6 +60,7 @@
                 <version>3.2.0</version>
                 <configuration>
                     <archive>
+                        <index>true</index>
                         <manifest>
                             <mainClass>br.edu.unilab.app.App</mainClass>
                         </manifest>
