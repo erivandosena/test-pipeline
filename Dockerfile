@@ -36,14 +36,14 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN rm -rf /etc/apt/sources.list.d/*
 RUN echo "deb http://ftp.us.debian.org/debian stable main contrib" > /etc/apt/sources.list
 
-RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y \
+RUN apt-get update && apt-get upgrade -y \
   && apt-get install -y --no-install-recommends \
     curl \
     telnet \
     iputils-ping \
     lsb-release \
     locales \
-  && rm -rf /var/lib/apt/lists/* \
+  #&& rm -rf /var/lib/apt/lists/* \
   && apt-get autoremove -y
 
 ARG VERSION
