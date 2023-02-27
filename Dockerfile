@@ -40,7 +40,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get upgrade -y \
   && apt-get autoremove -y \
-  && apt-get install --force-yes --no-install-recommends --allow-remove-essential \
+  && apt-get install -y --no-install-recommends --allow-remove-essential \
     curl \
     telnet \
     iputils-ping \
