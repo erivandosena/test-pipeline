@@ -33,7 +33,8 @@ FROM java:openjdk-8u111-jre
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get upgrade -y \
+  && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
     telnet \
