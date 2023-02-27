@@ -37,14 +37,14 @@ RUN rm -rf /etc/apt/sources.list.d/*
 RUN echo "deb http://ftp.us.debian.org/debian stable main contrib" > /etc/apt/sources.list
 
 RUN apt-get update && apt-get upgrade -y \
+  && apt-get autoremove -y \
   && apt-get install -y --no-install-recommends \
     curl \
     telnet \
     iputils-ping \
     lsb-release \
     locales \
-  #&& rm -rf /var/lib/apt/lists/* \
-  && apt-get autoremove -y
+  && rm -rf /var/lib/apt/lists/*
 
 ARG VERSION
 ARG COMMIT_SHA
