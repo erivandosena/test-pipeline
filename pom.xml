@@ -6,7 +6,7 @@
 
     <!-- The project coordinates -->
     <groupId>br.edu.unilab.app</groupId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <artifactId>${env.APP_NAME}</artifactId>
     <version>${env.APP_VERSION}-SNAPSHOT</version>
     <name>${env.APP_NAME}</name>
@@ -31,7 +31,7 @@
     <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.11</version>
+        <version>4.12</version>
         <scope>test</scope>
     </dependency>
     </dependencies>
