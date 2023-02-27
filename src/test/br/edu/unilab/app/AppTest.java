@@ -25,7 +25,7 @@ public class AppTest
         try {
             new App();
         } catch (Exception e) {
-            fail("A construção falhou");
+            fail("O Build falhou");
         }
     }
 
@@ -34,9 +34,9 @@ public class AppTest
     {
         App.main(null);
         try {
-            assertEquals("Hello DevOps!" + System.getProperty("line.separator"), outContent.toString());
+            assertEquals("App is Up! Pipeline CI/CD executada com sucesso!" + System.getProperty("line.separator"), outContent.toString());
         } catch (AssertionError e) {
-            fail("\"message\" is not \"Hello DEVOPS!\"");
+            fail("\"message\" is not \"App is Up! Pipeline CI/CD executada com sucesso!\"");
         }
     }
 
