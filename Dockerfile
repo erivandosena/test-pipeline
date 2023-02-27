@@ -39,14 +39,13 @@ ENV DEBIAN_FRONTEND noninteractive
 #RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
 
 RUN apt-get update && apt-get upgrade -y \
-  && apt-get install --force-yes --no-install-recommends \
+  && apt-get autoremove -y \
+  && apt-get install --force-yes --no-install-recommends --allow-remove-essential \
     curl \
     telnet \
     iputils-ping \
     lsb-release \
-    locales \
-  && rm -rf /var/lib/apt/lists/* \
-  && apt-get autoremove -y
+    locales
 
 ARG VERSION
 ARG COMMIT_SHA
