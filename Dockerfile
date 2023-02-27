@@ -58,7 +58,7 @@ ENV APP_NAME "sample-app-${APP_VERSION}-SNAPSHOT.jar"
 
 WORKDIR /opt
 
-ADD "${PWD}/target/${APP_NAME}" /opt
+#ADD "${PWD}/target/${APP_NAME}" /opt
 
 EXPOSE 80 443
 
