@@ -30,7 +30,7 @@ pipeline {
     APP_NAMESPACE = "app-pipeline-cicd"
     //DOCKER_TAG = "$GIT_COMMIT" // ou "$GIT_BRANCH" que pode ser definido como uma tag git semver
     DOCKER_TAG = "${env.GIT_BRANCH.split('/')[-1]}"  //retire a 'origin/' inicial de 'origin/branch'
-    DOCKER_IMAGE = "unlb\/${APP_NAME}"
+    DOCKER_IMAGE = "unlb/${APP_NAME}"
     BUILD_NUMBER = "${env.BUILD_NUMBER}"
     // se criar imagens docker em agentes, isso habilita o BuildKit, que cria automaticamente camadas de imagens em paralelo sempre que possível (especialmente útil para compilações de vários estágios)
     // adicione também '--build-arg BUILDKIT_INLINE_CACHE=1' ao comando docker build
@@ -120,7 +120,7 @@ pipeline {
         //container('maven') {
           sh "sed -i 's/<APP_NAMESPACE>/${env.APP_NAMESPACE}/' k8s.yaml"
           sh "sed -i 's/<APP_NAME>/${env.APP_NAME}/' k8s.yaml"
-          sh "sed -i 's/<IMAGE_TAG>/${env.DOCKER_IMAGE}:${env.DOCKER_TAG}/' k8s.yaml"
+          sh "sed -i 's/<IMAGE_TAG>/unlb\/${APP_NAME}:${env.DOCKER_TAG}/' k8s.yaml"
           
           // https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
           //sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'
