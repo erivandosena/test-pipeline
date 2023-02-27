@@ -56,7 +56,7 @@ ENV APP_VERSION ${VERSION}
 
 ENV APP_NAME "sample-app-${APP_VERSION}-SNAPSHOT.jar"
 
-COPY "${PWD}/target/${APP_NAME}" /app
+COPY "target/${APP_NAME}" /app
 
 WORKDIR /app
 
