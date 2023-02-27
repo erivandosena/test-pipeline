@@ -121,9 +121,6 @@
                     <classpathPrefix>lib/</classpathPrefix>
                     <mainClass>br.edu.unilab.app.App</mainClass>
                     </manifest>
-                    <descriptorRefs>
-                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
                 </archive>
                 </configuration>
             </plugin>
