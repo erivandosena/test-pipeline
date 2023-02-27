@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- The project coordinates -->
-    <groupId>br.edu.unilab</groupId>
+    <groupId>br.edu.unilab.app</groupId>
     <packaging>jar</packaging>
     <artifactId>${env.APP_NAME}</artifactId>
     <version>${env.APP_VERSION}-SNAPSHOT</version>
@@ -61,6 +61,8 @@
                 <configuration>
                     <archive>
                         <index>true</index>
+                        <addClasspath>true</addClasspath>
+                        <classpathPrefix>lib/</classpathPrefix>
                         <manifest>
                             <mainClass>br.edu.unilab.app.App</mainClass>
                         </manifest>
