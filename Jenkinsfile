@@ -120,7 +120,7 @@ pipeline {
         //container('maven') {
           sh "sed -i 's/<APP_NAMESPACE>/${env.APP_NAMESPACE}/' k8s.yaml"
           sh "sed -i 's/<APP_NAME>/${env.APP_NAME}/' k8s.yaml"
-          sh 'sed -i "s/<IMAGE_TAG>/'unlb\/${env.APP_NAME}\:${env.DOCKER_TAG}'/" k8s.yaml'
+          sh 'sed -i "s/<IMAGE_TAG>/unlb\/${env.APP_NAME}\:${env.DOCKER_TAG}/" k8s.yaml'
           
           // https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
           //sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"'
