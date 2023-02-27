@@ -34,8 +34,8 @@
     <!-- The project build settings -->
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
-        <sourceDirectory>src</sourceDirectory>
-        <testSourceDirectory>test</testSourceDirectory>
+        <sourceDirectory>src/main</sourceDirectory>
+        <testSourceDirectory>src/test</testSourceDirectory>
         <resources>
             <resource>
             <directory>src</directory>
