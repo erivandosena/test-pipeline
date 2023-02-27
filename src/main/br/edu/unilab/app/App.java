@@ -6,7 +6,7 @@ package br.edu.unilab.app;
 public class App
 {
 
-    private final String message = "Hello DEVOPS!";
+    private final String message = "App is Up! Pipeline CI/CD executada com sucesso!";
 
     public App() {}
 
