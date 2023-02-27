@@ -141,7 +141,7 @@ pipeline {
             Exemplo de uso: kubectl rollout history -n docker deployment.apps/docker
             Nota: Quando --record não é sinalizador, na tabela, CHANGE-CAUSE estará apenas <none>
             */
-            String check = sh "kubectl get deployments -n $APP_NAMESPACE -o=jsonpath='{range .items[*]}{.status.conditions[?(@.type=="Available")].status}{"\\n"}{end}'"
+            String check = sh "kubectl get deployments -n $APP_NAMESPACE -o=jsonpath='{range .items[*]}{.status.conditions[?(@.type=="Available")].status}{"//\\n"}{end}'"
             if (check!=null && check.length()>0) {
                 sh "kubectl delete -f k8s.yaml --record"
             } else {
