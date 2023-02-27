@@ -37,8 +37,9 @@ RUN rm -rf /etc/apt/sources.list.d/*
 RUN echo "deb http://ftp.us.debian.org/debian stable main contrib" > /etc/apt/sources.list
 
 RUN apt-get update && apt-get upgrade -y \
+  && apt-get dist-upgrade -y \
   && apt-get autoremove -y \
-  && apt-get install -y --no-install-recommends \
+  && apt-get install --force-yes --no-install-recommends \
     curl \
     telnet \
     iputils-ping \
